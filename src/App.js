@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from './component/Navigator/Navigation';
 import Logo from './component/Logo/Logo';
+import ImageFrom from './component/ImageFrom/ImageFrom';
 import './App.css';
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <div className="App">
     <Navigation/>
     <Logo/>
+    <ImageFrom/>
     </div>
   );
 }
