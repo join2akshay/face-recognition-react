@@ -2,3 +2,9 @@ form
 {
     width: 700px;
 }
+button
+{
+    border: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+}
