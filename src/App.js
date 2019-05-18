@@ -6,6 +6,7 @@ import Rank from './component/Rank/Rank';
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 import config from './config';
+import FaceReco from './component/FaceReco/FaceReco';
 import './App.css';
 const app = new Clarifai.App({
   apiKey: config.MY_KEY
@@ -26,23 +27,28 @@ class App extends Component {
   constructor(){
     super();
     this.state={
-      input:''
+      input:'',
+      imgURL:''
 
     }
   }
  onInputChange=(event)=>{
-   console.log(event.target.value);
+   
+   this.setState({input:event.target.value});
+  
  };
  onButtonSubmit=()=>{
-  app.models.predict("e0be3b9d6a454f0493ac3a30784001ff", "https://samples.clarifai.com/apparel.jpeg").then(
-    function(response) {
-      // do something with response
-      console.log(response);
-    },
-    function(err) {
-      // there was an error
-    }
-  );
+  console.log(this.state.input);
+   this.setState({imgURL:this.state.input});
+   console.log(this.state.imgURL);
+  app.models.initModel({id: Clarifai.FACE_DETECT_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40"})
+      .then(generalModel => {
+        return generalModel.predict(this.state.imgURL);
+      })
+      .then(response => {
+        var concepts = response['outputs'][0]['data']['concepts'];
+        console.log(concepts);
+      })
  };
  render(){
   return (
@@ -54,6 +60,7 @@ class App extends Component {
     <Logo/>
     <Rank/>
     <ImageFrom onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
+    <FaceReco imageURL={this.state.imgURL}/>
     </div>
   );
  }
