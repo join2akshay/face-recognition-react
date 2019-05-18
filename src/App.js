@@ -35,20 +35,20 @@ class App extends Component {
  onInputChange=(event)=>{
    
    this.setState({input:event.target.value});
-  
+  //.outputs[0].data.regions[0].region_info.boundind_box
  };
  onButtonSubmit=()=>{
-  console.log(this.state.input);
+ 
    this.setState({imgURL:this.state.input});
-   console.log(this.state.imgURL);
-  app.models.initModel({id: Clarifai.FACE_DETECT_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40"})
-      .then(generalModel => {
-        return generalModel.predict(this.state.imgURL);
-      })
-      .then(response => {
-        var concepts = response['outputs'][0]['data']['concepts'];
-        console.log(concepts);
-      })
+     app.models.predict("a403429f2ddf4b49b307e318f00e528b", this.state.input).then(
+    function(response) {
+      // do something with response
+      console.log(response.outputs[0].data);
+    },
+    function(err) {
+      // there was an error
+    }
+  );
  };
  render(){
   return (
