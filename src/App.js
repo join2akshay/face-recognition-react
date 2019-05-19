@@ -8,7 +8,8 @@ import Clarifai from 'clarifai';
 import config from './config';
 import FaceReco from './component/FaceReco/FaceReco';
 import './App.css';
-import Signin from './component/Singin/Signin'
+import Signin from './component/Singin/Signin';
+import Signup from './component/Signup/Signup';
 const app = new Clarifai.App({
   apiKey: config.MY_KEY
  });
@@ -31,7 +32,8 @@ class App extends Component {
       input:'',
       imgURL:'',
       box:{},
-      route:'Signin'
+      route:'Signin',
+      isSigned:false
 
     }
   }
@@ -66,21 +68,34 @@ return{
      app.models.predict("a403429f2ddf4b49b307e318f00e528b", this.state.input).then(response=>this.displayfaceBox(this.calculateFace(response))).catch(err=>console.log(err));
 
  };
+ onRouteChange=(route)=>
+ {
+   if(this.state.route==='signin')
+   {
+     this.setState({isSigned:false});
+   }
+   else if(this.state.route==='home')
+   {
+    this.setState({isSigned:true});
+   }
+   this.setState({route:route})
+ }
  render(){
   return (
     
     <div className="App">
      <Particles className='particle'
                 params={particleValue} />
-    <Navigation/>
+    <Navigation isSigned={this.state.isSigned} onRouteChange={this.onRouteChange}/>
     {
-      this.state.route ==='Signin'?
-    <Signin/> :<div>
+      this.state.route ==='home'?
+      <div>
     <Logo/>
     <Rank/>
     <ImageFrom onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
     <FaceReco box={this.state.box} imageURL={this.state.imgURL}/>
     </div>
+     :(this.state.route==='Signin'?<Signin onRouteChange={this.onRouteChange}/>:<Signup onRouteChange={this.onRouteChange}/>)
     }
     </div>
   );
