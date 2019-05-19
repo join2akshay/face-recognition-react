@@ -8,6 +8,7 @@ import Clarifai from 'clarifai';
 import config from './config';
 import FaceReco from './component/FaceReco/FaceReco';
 import './App.css';
+import Signin from './component/Singin/Signin'
 const app = new Clarifai.App({
   apiKey: config.MY_KEY
  });
@@ -29,7 +30,8 @@ class App extends Component {
     this.state={
       input:'',
       imgURL:'',
-      box:{}
+      box:{},
+      route:'Signin'
 
     }
   }
@@ -71,10 +73,15 @@ return{
      <Particles className='particle'
                 params={particleValue} />
     <Navigation/>
+    {
+      this.state.route ==='Signin'?
+    <Signin/> :<div>
     <Logo/>
     <Rank/>
     <ImageFrom onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
     <FaceReco box={this.state.box} imageURL={this.state.imgURL}/>
+    </div>
+    }
     </div>
   );
  }
