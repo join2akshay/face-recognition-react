@@ -28,27 +28,41 @@ class App extends Component {
     super();
     this.state={
       input:'',
-      imgURL:''
+      imgURL:'',
+      box:{}
 
     }
   }
+  calculateFace=(data)=>{
+const faceData=data.outputs[0].data.regions[0].region_info.bounding_box;
+const image=document.getElementById('FaceReco');
+const width=Number(image.width);
+const height=Number(image.height);
+console.log(width,height);
+console.log(faceData);
+return{
+  leftCol:faceData.left_col*width,
+  topRow:faceData.top_row*height,
+  rightCol:width-(faceData.right_col * width),
+  bottomRow:height-(faceData.bottom_row*height)
+}
+
+  };
+  displayfaceBox=(box)=>{
+    console.log(box);
+    this.setState({box:box});
+  }
+
  onInputChange=(event)=>{
    
    this.setState({input:event.target.value});
-  //.outputs[0].data.regions[0].region_info.boundind_box
+  
  };
  onButtonSubmit=()=>{
  
    this.setState({imgURL:this.state.input});
-     app.models.predict("a403429f2ddf4b49b307e318f00e528b", this.state.input).then(
-    function(response) {
-      // do something with response
-      console.log(response.outputs[0].data);
-    },
-    function(err) {
-      // there was an error
-    }
-  );
+     app.models.predict("a403429f2ddf4b49b307e318f00e528b", this.state.input).then(response=>this.displayfaceBox(this.calculateFace(response))).catch(err=>console.log(err));
+
  };
  render(){
   return (
@@ -60,7 +74,7 @@ class App extends Component {
     <Logo/>
     <Rank/>
     <ImageFrom onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
-    <FaceReco imageURL={this.state.imgURL}/>
+    <FaceReco box={this.state.box} imageURL={this.state.imgURL}/>
     </div>
   );
  }

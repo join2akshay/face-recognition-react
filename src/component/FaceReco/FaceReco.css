@@ -2,3 +2,16 @@
     width: 400px;
     height: 300px;
 }
+.bounding-box{
+    left: 62%;
+     top: 23%;
+     right: 84%;
+     bottom:  54%;
+    position: absolute;
+    box-shadow: 0 0 0 3px #149df2 inset;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    cursor: pointer;
+}
+
