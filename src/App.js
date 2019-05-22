@@ -33,10 +33,23 @@ class App extends Component {
       imgURL:'',
       box:{},
       route:'Signin',
-      isSigned:false
-
+      isSigned:false,
+      user:{
+        id:'',
+    name:'',
+    entries:0,
+    joined:''
+      }
     }
   }
+  loadUser=(data)=>{
+    this.setState({user:{
+      id:data.id,
+  name:data.name,
+  entries:data.entries,
+  joined:data.joined
+    }})
+  };
  
 
   calculateFace=(data)=>{
