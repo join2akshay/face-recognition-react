@@ -99,8 +99,10 @@ return{
   return (
     
     <div className="App">
+
      <Particles className='particle'
                 params={particleValue} />
+              
     <Navigation isSigned={this.state.isSigned} onRouteChange={this.onRouteChange}/>
     {
       this.state.route ==='home'?
