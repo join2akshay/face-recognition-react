@@ -80,7 +80,19 @@ return{
  onButtonSubmit=()=>{
  
    this.setState({imgURL:this.state.input});
-     app.models.predict("a403429f2ddf4b49b307e318f00e528b", this.state.input).then(response=>this.displayfaceBox(this.calculateFace(response))).catch(err=>console.log(err));
+     app.models.predict("a403429f2ddf4b49b307e318f00e528b", this.state.input).then(response=>
+      {if(response){
+        fetch('http://localhost:3000/image', {
+      method: 'put',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        id:this.state.user.id
+      })
+    }).then(response=>response.json()).then(count=>this.setState({user:{
+      entries:count
+    }}))
+      }
+      this.displayfaceBox(this.calculateFace(response))}).catch(err=>console.log(err));
 
  };
  onRouteChange=(route)=>
