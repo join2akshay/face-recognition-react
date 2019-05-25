@@ -33,7 +33,7 @@ onSubmitForm=()=>{
       .then(response => response.json())
       .then(user => {
         if (user) {
-         // this.props.loadUser(user)
+        this.props.loadUser(user);
           this.props.onRouteChange('home');
         }
       })

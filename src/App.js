@@ -122,11 +122,11 @@ return{
       this.state.route ==='home'?
       <div>
     <Logo/>
-    <Rank/>
+    <Rank name={this.state.user.name} entries={this.state.user.entries}/>
     <ImageFrom onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
     <FaceReco box={this.state.box} imageURL={this.state.imgURL}/>
     </div>
-     :(this.state.route==='Signin'?<Signin onRouteChange={this.onRouteChange}/>:<Signup onRouteChange={this.onRouteChange}/>)
+     :(this.state.route==='Signin'?<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>:<Signup loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>)
     }
     </div>
   );
