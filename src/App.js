@@ -49,8 +49,9 @@ class App extends Component {
   entries:data.entries,
   joined:data.joined
     }})
+    
   };
- 
+
 
   calculateFace=(data)=>{
 const faceData=data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -82,7 +83,7 @@ return{
    this.setState({imgURL:this.state.input});
      app.models.predict("a403429f2ddf4b49b307e318f00e528b", this.state.input).then(response=>
       {if(response){
-        fetch('http://localhost:3000/image', {
+        fetch('http://localhost:3001/image', {
       method: 'put',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -108,6 +109,7 @@ return{
    this.setState({route:route})
  }
  render(){
+   
   return (
     
     <div className="App">
